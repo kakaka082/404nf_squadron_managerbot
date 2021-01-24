@@ -58,7 +58,7 @@ client.on('message', message =>{
    sendReply(message, "呼びましたか?？");
    return;
  }
- if (message.content.match(/にゃ～ん|にゃーん/)){
+ if (message.content.match(/にゃ～ん|ぬーん/)){
    let text = "にゃ～ん";
    sendMsg(message.channel.id, text);
    return;
