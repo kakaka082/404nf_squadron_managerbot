@@ -55,7 +55,7 @@ client.on('message', message =>{
    return;
  }
  if(message.isMemberMentioned(client.user)){
-   sendReply(message, "呼びましたか？");
+   sendReply(message, "呼びましたか?？");
    return;
  }
  if (message.content.match(/にゃ～ん|にゃーん/)){
