@@ -37,7 +37,7 @@ client.on('ready', message =>{
  console.log('Bot準備完了～');
  // ステータスに ゲームをプレイ中 を表示
     // setGameメソッドは廃止されました。
-    client.user.setActivity('おまえ', {
+    client.user.setActivity('$ping | bit.ly/404bot', {
         type: 'WATCHING'
         /*
         typeの値:
