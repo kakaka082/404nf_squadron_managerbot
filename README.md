@@ -1,1 +1,2 @@
 # 404nf_squadron_managerbot
+404NF Squadronの多機能BOT
