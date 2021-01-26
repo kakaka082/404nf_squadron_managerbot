@@ -48,7 +48,7 @@ client.on('ready', message =>{
 });
 
 client.on('message', message => {
-  if (message.content === '!ping') {  
+  if (message.content === '$ping') {  
     message.channel.send(`🏓 現在の応答速度は ${Date.now() - message.createdTimestamp}msです。`);
   }
 
