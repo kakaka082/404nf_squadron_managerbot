@@ -36,12 +36,9 @@ http.createServer(function(req, res){
 client.on('ready', message =>{
  console.log('Bot準備完了～');
  // ステータスに ゲームをプレイ中 を表示
-    // setGameメソッドは廃止されました。
     client.user.setActivity('$ping | bit.ly/404bot', {
         type: 'WATCHING'
         /*
-        typeの値:
-            https://discord.js.org/#/docs/main/stable/class/ClientUser?scrollTo=setActivity
                 'PLAYING': 〇〇 をプレイ中
                 'STREAMING': 〇〇 を配信中
                 'WATCHING': 〇〇 を視聴中
@@ -51,10 +48,24 @@ client.on('ready', message =>{
 });
 
 client.on('message', message => {
-  if (message.content === '$ping') {  
+  if (message.content === '!ping') {  
     message.channel.send(`🏓 現在の応答速度は ${Date.now() - message.createdTimestamp}msです。`);
   }
+
+//TSからバナー取得
+if(message.content.startsWith('\$ts ')) {
+  var wtplayername = message.content.replace(/^\$ts /, ''); 
+  message.channel.send(`http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-a.png http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-r.png http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-s.png 
+`);
+  return;
+  
+}
+
+
 });
+
+
+
 
 client.on('message', message =>{
  if (message.author.id == client.user.id){
@@ -70,6 +81,8 @@ client.on('message', message =>{
    return;
  }
 });
+
+
 
 if(process.env.DISCORD_BOT_TOKEN == undefined){
 console.log('DISCORD_BOT_TOKENが設定されていません。');
