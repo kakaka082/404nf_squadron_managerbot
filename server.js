@@ -3,7 +3,8 @@ const querystring = require('querystring');
 const discord = require('discord.js');
 const client = new discord.Client();
 const prefix = "$";
-
+const request = require('request');
+const APEXAPIKEY = process.env.APEX_BOT_TOKEN
 
 http.createServer(function(req, res){
  if (req.method == 'POST'){
@@ -57,8 +58,27 @@ if(message.content.startsWith('\$ts ')) {
   var wtplayername = message.content.replace(/^\$ts /, ''); 
   message.channel.send(`http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-a.png http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-r.png http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-s.png 
 `);
-  return;
+}
   
+
+  //apexトラッカー
+  if(message.content.startsWith('\$apex-pc ')) {
+  var apexpcid = message.content.replace(/^\$apex\-pc /, ''); 
+  var URL = 'https://public-api.tracker.gg/v2/apex/standard/profile/origin/SSRB_kAKakA';
+  var statsdata = 'a'
+request.get({
+    uri: URL,
+    headers: {'Content-type': 'application/json',
+    'TRN-Api-Key' : APEXAPIKEY },
+    qs: {
+        // GETのURLの後に付く
+        // ?hoge=hugaの部分
+    },
+    json: true
+}, function(err, req, data){
+    console.log(data);
+});
+  message.channel.send(`${apexpcid}`);
 }
 
 

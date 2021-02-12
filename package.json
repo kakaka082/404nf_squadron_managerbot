@@ -13,7 +13,8 @@
     "express": "^4.17.1",
     "discord.js": "^11.6.4",
     "querystring": "^0.2.0",
-    "sync-glitch-cli": "^2.0.1"
+    "sync-glitch-cli": "^2.0.1",
+    "request": "^2.88.2"
   },
   "engines": {
     "node": "12.x"
