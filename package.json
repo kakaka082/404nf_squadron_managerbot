@@ -14,7 +14,8 @@
     "discord.js": "^11.6.4",
     "querystring": "^0.2.0",
     "sync-glitch-cli": "^2.0.1",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "xmlhttp-request": "^0.4.1"
   },
   "engines": {
     "node": "12.x"
