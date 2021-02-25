@@ -4,7 +4,7 @@ const discord = require('discord.js');
 const client = new discord.Client();
 const prefix = "$";
 const request = require('request');
-const APEXAPIKEY = process.env.APEX_BOT_TOKEN
+
 
 http.createServer(function(req, res){
  if (req.method == 'POST'){
@@ -37,7 +37,7 @@ http.createServer(function(req, res){
 client.on('ready', message =>{
  console.log('Bot準備完了～');
  // ステータスに ゲームをプレイ中 を表示
-    client.user.setActivity('$ping | bit.ly/404bot', {
+    client.user.setActivity('$ping | bit.ly/404bot | Work In Progress!', {
         type: 'WATCHING'
         /*
                 'PLAYING': 〇〇 をプレイ中
@@ -56,8 +56,35 @@ client.on('message', message => {
 //TSからバナー取得
 if(message.content.startsWith('\$ts ')) {
   var wtplayername = message.content.replace(/^\$ts /, ''); 
-  message.channel.send(`http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-a.png http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-r.png http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-s.png 
-`);
+  message.channel.send({
+  "embed": {
+    "title": ` ${wtplayername}'s Arcade Battle Statistics`,
+    "url": `http://thunderskill.com/en/stat/${wtplayername}`,
+    "color": 1,
+   "image": {
+      "url": `http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-a.png`
+    }}
+});
+  
+  message.channel.send({
+  "embed": {
+    "title": ` ${wtplayername}'s Realistic Battle Statistics`,
+    "url": `http://thunderskill.com/en/stat/${wtplayername}`,
+    "color": 1,
+   "image": {
+      "url": `http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-r.png`
+    }}
+});
+  message.channel.send({
+  "embed": {
+    "title": ` ${wtplayername}'s Simulator Battle Statistics`,
+    "url": `http://thunderskill.com/en/stat/${wtplayername}`,
+    "color": 1,
+   "image": {
+      "url": `http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-s.png`
+    }}
+});
+  
 }
   
 
@@ -65,20 +92,15 @@ if(message.content.startsWith('\$ts ')) {
   if(message.content.startsWith('\$apex-pc ')) {
   var apexpcid = message.content.replace(/^\$apex\-pc /, ''); 
   var URL = 'https://public-api.tracker.gg/v2/apex/standard/profile/origin/SSRB_kAKakA';
-  var statsdata = 'a'
-request.get({
+  var statsdata = request.get({
     uri: URL,
-    headers: {'Content-type': 'application/json',
-    'TRN-Api-Key' : APEXAPIKEY },
-    qs: {
-        // GETのURLの後に付く
-        // ?hoge=hugaの部分
+    headers: {'Content-type': 'application/json','TRN-Api-Key' : process.env.APEX_BOT_TOKEN 
     },
-    json: true
+    
 }, function(err, req, data){
-    console.log(data);
+    console.log(err, req, data);
 });
-  message.channel.send(`${apexpcid}`);
+  message.channel.send(`${JSON.stringify(statsdata)}`);
 }
 
 
