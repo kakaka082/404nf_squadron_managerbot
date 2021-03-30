@@ -37,7 +37,7 @@ http
 client.on("ready", message => {
   console.log("Bot準備完了～");
   // ステータスに ゲームをプレイ中 を表示
-  client.user.setActivity("$ping | bit.ly/404bot | Work In Progress!", {
+  client.user.setActivity("$help | bit.ly/404bot | Work In Progress!", {
     type: "WATCHING"
     /*
                 'PLAYING': 〇〇 をプレイ中
@@ -55,39 +55,33 @@ client.on("message", message => {
     );
   }
   if (message.content === "$help") {
-    message.channel.send(
-      {
-  
-  "embed": {
-    "title": "404managerBOT commands",
-    "description": "**THIS BOT IS WORK IN PROGRESS!**  [GitHub](https://github.com/kakaka082/404nf_squadron_managerbot)",
-    "color": 16293400,
-    "timestamp": `${Date.now()}`,
-    
-    "fields": [
-      {
-        "name": "Ping",
-        "value": "`$ping`\nMeasure the response time."
-      },
-      {
-        "name": "ThunderSkill stats",
-        "value": "`$ts [Player Name]`\nGet WarThunder's player data from ThunderSkill, which will be output in Embed format; please enable Embed settings in Discord."
-      }
-    ]
-    
-  }
-}
-    );
-  }
+    message.channel.send({
+      embed: {
+        title: "404managerBOT commands",
+        description:
+          "**THIS BOT IS WORK IN PROGRESS!**  [GitHub](https://github.com/kakaka082/404nf_squadron_managerbot)",
+        color: 16293400,
+        timestamp: `${Date.now()}`,
 
-  
-  
+        fields: [
+          {
+            name: "Ping",
+            value: "`$ping`\nMeasure the response time."
+          },
+          {
+            name: "ThunderSkill stats",
+            value:
+              "`$ts [Player Name]`\nGet WarThunder player data from ThunderSkill."
+          }
+        ]
+      }
+    });
+  }
 
   //TSからバナー取得
   if (message.content.startsWith("$ts ")) {
     var wtplayername = message.content.replace(/^\$ts /, "");
-    message.channel.send(
-      {
+    message.channel.send({
       embed: {
         title: ` ${wtplayername}'s Arcade Battle Statistics`,
         url: `http://thunderskill.com/en/stat/${wtplayername}`,
@@ -123,7 +117,7 @@ client.on("message", message => {
   if (message.content.startsWith("$apex-pc ")) {
     var apexpcid = message.content.replace(/^\$apex\-pc /, "");
     var URL =
-      "https://public-api.tracker.gg/v2/apex/standard/profile/origin/SSRB_kAKakA";
+      "https://public-api.tracker.gg/v2/apex/standard/profile/origin/";
     var statsdata = request.get(
       {
         uri: URL,
@@ -140,20 +134,7 @@ client.on("message", message => {
   }
 });
 
-client.on("message", message => {
-  if (message.author.id == client.user.id) {
-    return;
-  }
-  if (message.isMemberMentioned(client.user)) {
-    sendReply(message, "呼びましたか?？");
-    return;
-  }
-  if (message.content.match(/にゃ～ん|ぬーん/)) {
-    let text = "にゃ～ん";
-    sendMsg(message.channel.id, text);
-    return;
-  }
-});
+
 
 if (process.env.DISCORD_BOT_TOKEN == undefined) {
   console.log("DISCORD_BOT_TOKENが設定されていません。");

@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "discord.js": "^11.6.4",
-    "querystring": "^0.2.0",
+    "discord.js": "^12.5.1",
+    "querystring": "^0.2.1",
     "sync-glitch-cli": "^2.0.1",
     "request": "^2.88.2",
-    "xmlhttp-request": "^0.4.1"
+    "xmlhttp-request": "^0.4.1",
+    "google-cloud": "^0.58.2",
+    "@google-cloud/text-to-speech": "^3.1.1",
+    "@discordjs/opus": "^0.3.3"
   },
   "engines": {
     "node": "12.x"
