@@ -55,6 +55,8 @@ client.on("message", message => {
     );
   }
   if (message.content === "$help") {
+    message.channel.send(
+      `🏓 現在の応答速度は ${Date.now() - message.createdTimestamp}msです。`);
     message.channel.send({
       embed: {
         title: "404managerBOT commands",
@@ -72,6 +74,12 @@ client.on("message", message => {
             name: "ThunderSkill stats",
             value:
               "`$ts [Player Name]`\nGet WarThunder player data from ThunderSkill."
+          }
+          ,
+          {
+            name: "Squadron profile",
+            value:
+              "`$ts [Squadron full name]`\nLowercase, uppercase, spaces, and symbols are all distinguished."
           }
         ]
       }
@@ -111,13 +119,40 @@ client.on("message", message => {
         }
       }
     });
+
+    message.channel.send({
+      embed: {
+        title: "War Thunder profile on Web",
+        url: `https://warthunder.com/en/community/userinfo/?nick=${wtplayername}`,
+        color: 13079036,
+        image: {
+          url:
+            "https://cdn.discordapp.com/attachments/749350112849035264/885780613133647892/logo-warthunder.png"
+        },
+        fields: [
+          {
+            name: "nyan nyan",
+            value: `${wtplayername}`,
+            inline: true
+          }
+        ]
+      }
+    });
+  }
+
+  //squadron
+  if (message.content.startsWith("$sq ")) {
+    var squad = message.content.replace(/^\$sq /, "");
+    squad = squad.replace(/\s+/g, "+");
+    message.channel.send(
+      `https://warthunder.com/en/community/claninfo/${squad}`
+    );
   }
 
   //apexトラッカー
   if (message.content.startsWith("$apex-pc ")) {
     var apexpcid = message.content.replace(/^\$apex\-pc /, "");
-    var URL =
-      "https://public-api.tracker.gg/v2/apex/standard/profile/origin/";
+    var URL = "https://public-api.tracker.gg/v2/apex/standard/profile/origin/";
     var statsdata = request.get(
       {
         uri: URL,
@@ -133,8 +168,6 @@ client.on("message", message => {
     message.channel.send(`${JSON.stringify(statsdata)}`);
   }
 });
-
-
 
 if (process.env.DISCORD_BOT_TOKEN == undefined) {
   console.log("DISCORD_BOT_TOKENが設定されていません。");
