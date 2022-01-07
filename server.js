@@ -6,13 +6,13 @@ const prefix = "$";
 const request = require("request");
 
 http
-  .createServer(function(req, res) {
+  .createServer(function (req, res) {
     if (req.method == "POST") {
       var data = "";
-      req.on("data", function(chunk) {
+      req.on("data", function (chunk) {
         data += chunk;
       });
-      req.on("end", function() {
+      req.on("end", function () {
         if (!data) {
           console.log("No post data");
           res.end();
@@ -34,11 +34,11 @@ http
   })
   .listen(3000);
 
-client.on("ready", message => {
+client.on("ready", (message) => {
   console.log("Bot準備完了～");
   // ステータスに ゲームをプレイ中 を表示
   client.user.setActivity("$help | bit.ly/404bot | Work In Progress!", {
-    type: "WATCHING"
+    type: "WATCHING",
     /*
                 'PLAYING': 〇〇 をプレイ中
                 'STREAMING': 〇〇 を配信中
@@ -48,7 +48,7 @@ client.on("ready", message => {
   });
 });
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content === "$ping") {
     message.channel.send(
       `🏓 現在の応答速度は ${Date.now() - message.createdTimestamp}msです。`
@@ -56,7 +56,8 @@ client.on("message", message => {
   }
   if (message.content === "$help") {
     message.channel.send(
-      `🏓 現在の応答速度は ${Date.now() - message.createdTimestamp}msです。`);
+      `🏓 現在の応答速度は ${Date.now() - message.createdTimestamp}msです。`
+    );
     message.channel.send({
       embed: {
         title: "404managerBOT commands",
@@ -68,21 +69,20 @@ client.on("message", message => {
         fields: [
           {
             name: "Ping",
-            value: "`$ping`\nMeasure the response time."
+            value: "`$ping`\nMeasure the response time.",
           },
           {
             name: "ThunderSkill stats",
             value:
-              "`$ts [Player Name]`\nGet WarThunder player data from ThunderSkill."
-          }
-          ,
+              "`$ts [Player Name]`\nGet WarThunder player data from ThunderSkill.",
+          },
           {
             name: "Squadron profile",
             value:
-              "`$ts [Squadron full name]`\nLowercase, uppercase, spaces, and symbols are all distinguished."
-          }
-        ]
-      }
+              "`$ts [Squadron full name]`\nLowercase, uppercase, spaces, and symbols are all distinguished.",
+          },
+        ],
+      },
     });
   }
 
@@ -95,9 +95,9 @@ client.on("message", message => {
         url: `http://thunderskill.com/en/stat/${wtplayername}`,
         color: 1,
         image: {
-          url: `http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-a.png`
-        }
-      }
+          url: `http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-a.png`,
+        },
+      },
     });
     message.channel.send({
       embed: {
@@ -105,9 +105,9 @@ client.on("message", message => {
         url: `http://thunderskill.com/en/stat/${wtplayername}`,
         color: 1,
         image: {
-          url: `http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-r.png`
-        }
-      }
+          url: `http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-r.png`,
+        },
+      },
     });
     message.channel.send({
       embed: {
@@ -115,9 +115,9 @@ client.on("message", message => {
         url: `http://thunderskill.com/en/stat/${wtplayername}`,
         color: 1,
         image: {
-          url: `http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-s.png`
-        }
-      }
+          url: `http://thunderskill.com/userbars/f/a/${wtplayername}/en-1-combined-s.png`,
+        },
+      },
     });
 
     message.channel.send({
@@ -126,17 +126,16 @@ client.on("message", message => {
         url: `https://warthunder.com/en/community/userinfo/?nick=${wtplayername}`,
         color: 13079036,
         image: {
-          url:
-            "https://cdn.discordapp.com/attachments/749350112849035264/885780613133647892/logo-warthunder.png"
+          url: "https://cdn.discordapp.com/attachments/749350112849035264/885780613133647892/logo-warthunder.png",
         },
         fields: [
           {
             name: "nyan nyan",
             value: `${wtplayername}`,
-            inline: true
-          }
-        ]
-      }
+            inline: true,
+          },
+        ],
+      },
     });
   }
 
@@ -149,6 +148,68 @@ client.on("message", message => {
     );
   }
 
+  //sqb_manage
+  if (message.content.startsWith("$sqb")) {
+    if (message.member.voice.channel == null) {
+      message.channel.send("あなたはVCに居ません！/You're not in the VC.");
+    } else {
+      var VCID = message.member.voice.channel;
+      message.channel.send(VCID);
+      VCID.members.forEach((member) => {
+        message.channel.send("<@" + member.id + ">");
+      });
+      const authIcon = message.author.avatarURL();
+      const authName = message.author.username;
+      const embed = {
+        title:
+          "次の試合で使用する車種にリアクションしてください / React to the vehicle type you will use in the next game.",
+        description:
+          "最大スポーン数　空(ヘリコプターを含む):4 陸:8 [合計8スポーン] / Maximum number of spawns Air (including helicopters): 4 Ground: 8 [Total: 8 spawns]",
+        color: 16635441,
+        thumbnail: {
+          url: "https://cdn.discordapp.com/attachments/749350112849035264/929093182757670932/sqb1.png",
+        },
+        author: {
+          name: authName,
+          icon_url: authIcon,
+        },
+        fields: [
+          {
+            name: "💥",
+            value:
+              "制空戦闘機 / Air superiority fighters\n-----------------------",
+          },
+          {
+            name: "💣",
+            value:
+              "対地攻撃機 / Ground attack aircraft\n-----------------------",
+          },
+          {
+            name: "🚁",
+            value: "攻撃ヘリ / Attack helicopter\n-----------------------",
+          },
+          {
+            name: "🪖",
+            value: "戦車 / Tank\n-----------------------",
+          },
+          {
+            name: "🏹",
+            value: "対空戦車 / SPAA",
+          },
+        ],
+      };
+      message.channel.send({ embed }).then(embedMessage => {
+    embedMessage.react("💥")
+    embedMessage.react("💣")
+    embedMessage.react("🚁")
+    embedMessage.react("🪖")
+    embedMessage.react("🏹")
+        
+});
+      
+    }
+  }
+
   //apexトラッカー
   if (message.content.startsWith("$apex-pc ")) {
     var apexpcid = message.content.replace(/^\$apex\-pc /, "");
@@ -158,10 +219,10 @@ client.on("message", message => {
         uri: URL,
         headers: {
           "Content-type": "application/json",
-          "TRN-Api-Key": process.env.APEX_BOT_TOKEN
-        }
+          "TRN-Api-Key": process.env.APEX_BOT_TOKEN,
+        },
       },
-      function(err, req, data) {
+      function (err, req, data) {
         console.log(err, req, data);
       }
     );
